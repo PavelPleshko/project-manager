@@ -1,0 +1,33 @@
+:host{
+	padding:2rem;
+	.sbg-form-group{
+		max-height:2rem;
+
+		input{
+			height:inherit;
+			font-size:.8rem;
+		}
+	}
+	.sbg-prepend{
+		&--inner{
+			background-color:transparent;
+			border-left:none;
+			cursor:pointer;
+			transition:.2s;
+			&:hover{
+				background-color:rgba(0,0,0,.05);
+				
+			}
+		}
+	}
+
+	.sbg-status-filter{
+		background-color:rgba(0,0,0,.05);
+		padding:.2rem 1rem;
+		border-radius:.2rem;
+		cursor:pointer;
+
+	}
+
+
+}

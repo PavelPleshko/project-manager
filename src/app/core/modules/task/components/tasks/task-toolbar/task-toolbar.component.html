@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="sbg-name-filter col-sm-3">
+		<div class="input-group sbg-form-group">
+			<input type="text" name="titleFilter" class="form-control" placeholder="Search task names">
+			 <div class="sbg-prepend input-group-prepend">
+		          <div class="sbg-prepend--inner input-group-text">
+		          	<fa name="search"></fa>
+		          </div>
+		        </div>
+		</div>
+	</div>
+	<div class="col-sm-3 d-flex align-items-center">
+		<div ngbDropdown class="d-inline-block">
+			<div class="sbg-status-filter" ngbDropdownToggle>
+				<span>Status:</span>
+				<strong>{{currentFilter.status | titlecase}}</strong>
+			</div>
+			<div class="m-0 p-2" ngbDropdownMenu>
+					here is the content
+				</div>
+		</div>
+	</div>
+</div>
