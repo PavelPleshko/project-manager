@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule} from '@angular/forms';
 
 
 import { NavbarComponent } from './components';
 
 export const VENDOR_MODULES = [
-AngularFontAwesomeModule,NgbDropdownModule
+AngularFontAwesomeModule,NgbDropdownModule,FormsModule
 ];
 export const COMPONENTS = [
 NavbarComponent

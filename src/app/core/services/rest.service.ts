@@ -14,11 +14,16 @@ apiUrl:string;
   }
 
 
-  getApi(path:string=this.config.mainApiUrl,params?:any):Observable<any>{
+  getApi(path:string,params?:any):Observable<any>{
   	params = this.getQueryString(params);
-  	console.log(params)
-  	let url = `${this.apiUrl}${path}`;
+  	let url = path ? `${this.apiUrl}${path}` : this.apiUrl;
   	return this.http.get(url,{params});
+  }
+
+  deleteApi(path:string,params?:any):Observable<any>{
+    params = this.getQueryString(params);
+    let url = path ? `${this.apiUrl}${path}` : this.apiUrl;
+    return this.http.delete(url,{params}); 
   }
 
 

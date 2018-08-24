@@ -1,0 +1,18 @@
+@import 'variables';
+
+:host{
+	font-size:.8rem;
+
+	&:hover{
+		background-color:$selected-lighter;
+	}
+
+
+	&.selected{
+		background-color:$selected;
+	}
+
+
+	
+	
+}

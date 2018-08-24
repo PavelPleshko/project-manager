@@ -1,9 +1,15 @@
 :host{
 	padding:2rem;
+
+	.sbg-results{
+		font-size:.9rem;
+		display:flex;
+		align-items:center;
+	}
 	.sbg-form-group{
 		max-height:2rem;
 
-		input{
+		input,select{
 			height:inherit;
 			font-size:.8rem;
 		}
@@ -26,8 +32,19 @@
 		padding:.2rem 1rem;
 		border-radius:.2rem;
 		cursor:pointer;
-
 	}
+
+	.sbg-clear-filters{
+				color:rgba(0,0,0,.6);
+			&:hover{
+				color:rgba(0,0,0,.8);
+				cursor:pointer;
+			}
+
+			&.sbg-disabled{
+				pointer-events:none;
+			}
+		}
 
 
 }

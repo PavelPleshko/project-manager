@@ -1,0 +1,29 @@
+<div class="p-2">
+	<h4 class="text-center mb-2">
+		<span class="bg-light px-2 rounded">Task details</span>
+	</h4>
+	<div class="sbg-task-subheader d-flex justify-content-between">
+		<div class="d-flex align-items-center">
+			<span class="sbg-badge" [class.sbg-completed]="task.status === 'COMPLETED'">
+				{{task.status}}
+			</span>
+			<h4 class="sbg-heading">
+				{{task.name}}
+			</h4>
+		</div>
+		<div class="sbg-actions">
+			<button class="btn btn-danger" (click)="deleteTask()">
+				<fa name="times"></fa>
+				<span class="ml-1">Delete</span>
+			</button>
+		</div>
+	</div>
+	<div class="sbg-task-body p-2">
+		<div class="d-flex align-items-center">
+			<h5 class="mb-0">
+				Project name
+			</h5>
+			<span class="ml-3">{{task.project}}</span>
+		</div>
+	</div>
+</div>

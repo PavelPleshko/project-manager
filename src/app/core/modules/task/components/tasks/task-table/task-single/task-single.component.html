@@ -1,9 +1,9 @@
 
    		<td>
-   			<input type="checkbox" name="selected">
+   			<input type="checkbox" name="selected" [checked]="selected" (change)="toggleSelected()">
    		</td>
    		<td>
-   			{{task.name}}
+   			<a [routerLink]="[task.id]" title="Check details">{{task.name}}</a>
    		</td>
    		<td>
    			{{task.executed_by}}
@@ -12,8 +12,10 @@
    			{{task.project}}
    		</td>
    		<td>
-   			{{task.status}}
+   			<span [class.sbg-completed]="task.status === 'COMPLETED'" class="px-2 py-1 sbg-badge">{{task.status}}</span>
    		</td>
-   		<td>
-   			<fa name="repeat"></fa>
+   		<td class="d-flex align-items-center justify-content-around text-center">
+      		 <span title="Delete task" class="sbg-action-iconbtn sbg-text-danger" (click)="deleteTask()">
+               <fa name="times"></fa>
+            </span>
    		</td>

@@ -5,6 +5,7 @@ import {CoreRoutes} from './core.routing';
 import { CoreComponent } from './components/core/core.component';
 import {SharedModule} from '@app/shared/shared.module';
 import {HttpAuthInterceptor} from './interceptors/http-auth-interceptor.service';
+import {HttpErrorInterceptor} from './interceptors/http-error-interceptor.service';
 
 export const COMPONENTS = [
 CoreComponent
@@ -20,7 +21,11 @@ CommonModule,CoreRoutes,HttpClientModule,SharedModule
   imports: [
     ...ANGULAR_MODULES
   ],
-	providers:[HttpAuthInterceptor],
+  providers:[
+		HttpAuthInterceptor,
+		HttpErrorInterceptor
+		
+  ],
   declarations: [...COMPONENTS],
   exports:[SharedModule]
 })

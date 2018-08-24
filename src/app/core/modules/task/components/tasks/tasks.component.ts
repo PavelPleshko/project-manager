@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {pluck} from 'rxjs/operators';
+import {pluck,take} from 'rxjs/operators';
 
 import {TaskService} from '@app/core';
 import {Task} from '../../interfaces/task';
@@ -13,12 +13,15 @@ export class TasksComponent implements OnInit {
   constructor(private taskService:TaskService) { }
 
   ngOnInit() {
-  	this.getTasks({fields:'_all'});
+    this.taskService.shouldFetch.subscribe(()=>{
+      let filter = this.taskService.currentFilter.getValue();
+      this.getTasks(filter);
+    })
+  	
   }
 
   getTasks(params?:Object){
-  	this.taskService.getTasks(params).pipe(pluck('items')).subscribe((taskList:Task[])=>{
-  		console.log(taskList);
+  	this.taskService.getTasks(params).pipe(pluck('items'),take(1)).subscribe((taskList:Task[])=>{
   		this.taskService.pushToCurrentTasks(taskList);
   	})
   }

@@ -1,23 +1,42 @@
 <div class="row">
-	<div class="sbg-name-filter col-sm-3">
-		<div class="input-group sbg-form-group">
-			<input type="text" name="titleFilter" class="form-control" placeholder="Search task names">
-			 <div class="sbg-prepend input-group-prepend">
-		          <div class="sbg-prepend--inner input-group-text">
-		          	<fa name="search"></fa>
-		          </div>
-		        </div>
+	<div class="sbg-results col-sm-2">
+		<div class="input-group sbg-form-group d-flex">
+			<span *ngIf="results$ | async as resultsCount;else noResults">Showing <strong class="badge badge-pill badge-primary">{{resultsCount}}</strong> results</span>
+			<ng-template #noResults>No results</ng-template>
 		</div>
 	</div>
-	<div class="col-sm-3 d-flex align-items-center">
-		<div ngbDropdown class="d-inline-block">
+	<div class="col-sm-2 d-flex align-items-center">
+		<div ngbDropdown autoClose="false" class="d-inline-block">
 			<div class="sbg-status-filter" ngbDropdownToggle>
 				<span>Status:</span>
-				<strong>{{currentFilter.status | titlecase}}</strong>
+				<strong>{{currentFilter.status || 'all' | titlecase}}</strong>
 			</div>
-			<div class="m-0 p-2" ngbDropdownMenu>
-					here is the content
+			<div class="m-0 p-3" ngbDropdownMenu>
+					<div class="font-weight-bold d-flex flex-column">
+						<span>Filter by: Status</span>
+						<span class="d-flex align-items-center sbg-clear-filters" [class.sbg-disabled]="!currentFilter.status" (click)="clearFilter('status')">
+							<fa name="times"></fa>
+							<small class="ml-1">Clear all</small>
+						</span>
+					</div>
+					<div class="d-flex align-items-center mt-2">
+						<input type="checkbox" name="status" id="status" value="COMPLETED" [checked]="currentFilter.status === 'COMPLETED'" (change)="onStatusFilterChange($event)">
+						<label for="status" class="text-uppercase ml-2 mb-0">Completed</label>
+					</div>
 				</div>
+		</div>
+	</div>
+	<div class="col-sm-3 offset-5">
+		<div class="row align-items-center no-gutters">
+			<small class="col-sm-4 text-nowrap">Limit results</small>
+			<div class="input-group sbg-form-group col-sm-5">
+				<select class="custom-select" [(ngModel)]="currentFilter.limit" (ngModelChange)="updateFilters()">
+					<option value="">No limit</option>
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+				</select>
+			</div>
 		</div>
 	</div>
 </div>

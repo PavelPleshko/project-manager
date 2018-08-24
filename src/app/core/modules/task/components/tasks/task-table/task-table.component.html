@@ -1,11 +1,13 @@
-<div class="sbg-toolbar">
-	
-</div>
 
 <table class="table text-center">
   <thead>
     <tr>
-      <th scope="col">Tick</th>
+      <th scope="col">
+        <div class="sbg-selected-control">
+          <input type="checkbox" name="selectAll" [class.sbg-disabled]="!tasks || tasks.length === 0" (change)="selectAllTasks()">
+          <span class="sbg-selected-control--number" *ngIf="selectedSize | async as amountSelected">{{amountSelected}}</span>
+        </div>
+      </th>
       <th scope="col">Task name</th>
       <th scope="col">Submitted by</th>
       <th scope="col">Project</th>
@@ -13,8 +15,20 @@
       <th scope="col">Actions</th>
     </tr>
   </thead>
-  <tbody *ngIf="tasks | async as taskList">
-   	<tr sbgTaskSingle *ngFor="let task of taskList" [task]="task">
+  <tbody *ngIf="tasks;else noTasks">
+   	<tr sbgTaskSingle *ngFor="let task of tasks" [forceSelect]="selectAll" [task]="task" (selectChanged)="onSelectChanged($event)" (deletedTask)="onDeletedTask($event)">
    	</tr>
   </tbody>
+  <ng-template #noTasks>
+    <tbody>
+      <tr class="text-center">
+        <td colspan="6">
+          <div class="d-inline-flex align-items-center p-3">
+          <span>No tasks to display</span>
+          <span class="ml-2"><fa name="frown-o"></fa></span>
+           </div>
+        </td>
+      </tr>
+    </tbody>
+  </ng-template>
 </table>
