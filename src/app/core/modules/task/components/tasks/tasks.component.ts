@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {pluck,take} from 'rxjs/operators';
+import { Component, OnInit,OnDestroy } from '@angular/core';
+import {pluck,take,map} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 import {TaskService} from '@app/core';
 import {Task} from '../../interfaces/task';
@@ -9,14 +10,17 @@ import {Task} from '../../interfaces/task';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit,OnDestroy {
+  subscriptions:Subscription[]=[];
   constructor(private taskService:TaskService) { }
 
   ngOnInit() {
-    this.taskService.shouldFetch.subscribe(()=>{
+    let shouldFetch = this.taskService.shouldFetch.subscribe(()=>{
       let filter = this.taskService.currentFilter.getValue();
       this.getTasks(filter);
-    })
+    });
+   
+    this.subscriptions.push(shouldFetch);
   	
   }
 
@@ -24,6 +28,12 @@ export class TasksComponent implements OnInit {
   	this.taskService.getTasks(params).pipe(pluck('items'),take(1)).subscribe((taskList:Task[])=>{
   		this.taskService.pushToCurrentTasks(taskList);
   	})
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(sub=>{
+      sub.unsubscribe();
+    })
   }
 
 }

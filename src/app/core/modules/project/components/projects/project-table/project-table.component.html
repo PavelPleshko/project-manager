@@ -1,0 +1,33 @@
+
+<table class="table text-center">
+  <thead>
+    <tr>
+      <th scope="col">
+        <div class="sbg-selected-control">
+          <input type="checkbox" name="selectAll" [class.sbg-disabled]="!projects || projects.length === 0" (change)="selectAllProjects()">
+          <span class="sbg-selected-control--number" *ngIf="selectedSize | async as amountSelected">{{amountSelected}}</span>
+        </div>
+      </th>
+      <th scope="col">Project id</th>
+      <th scope="col">Project name</th>
+      <th scope="col">Billing group</th>
+      <th scope="col">Type</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="projects;else noProjects">
+   	<tr sbgProjectSingle *ngFor="let project of projects" [forceSelect]="selectAll" [project]="project" (selectChanged)="onSelectChanged($event)">
+   	</tr>
+  </tbody>
+  <ng-template #noProjects>
+    <tbody>
+      <tr class="text-center">
+        <td colspan="4">
+          <div class="d-inline-flex align-items-center p-3">
+          <span>No Projects to display</span>
+          <span class="ml-2"><fa name="frown-o"></fa></span>
+           </div>
+        </td>
+      </tr>
+    </tbody>
+  </ng-template>
+</table>

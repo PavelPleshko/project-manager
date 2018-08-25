@@ -1,0 +1,17 @@
+
+   		<td>
+   			<input type="checkbox" name="selected" [checked]="selected" (change)="toggleSelected()">
+   		</td>
+   		<td>
+   			<a [routerLink]="[project.id]" title="Check details">{{project.id}}</a>
+   		</td>
+   		<td>
+   			{{project.name}}
+   		</td>   	
+   		<td>
+   			{{project.billing_group}}
+   		</td>
+   		<td>
+   			{{project.type}}
+   		</td>
+   		

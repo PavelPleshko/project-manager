@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {TaskRoutes} from './task.routing';
+import {TaskRoutingModule} from './task-routing.module';
 import {SharedModule} from '@app/shared/shared.module';
 
 import {TaskResolver} from './services/task.resolver';
@@ -14,15 +14,19 @@ import { TaskComponent } from './components/task/task.component';
 
 
 
+export const MODULES = [
+	 CommonModule,TaskRoutingModule,SharedModule
+];
 export const COMPONENTS = [
-TasksComponent, TaskTableComponent, TaskSingleComponent
+TasksComponent, TaskTableComponent, TaskSingleComponent,
+TaskToolbarComponent, TaskComponent
 ];
 
 @NgModule({
   imports: [
-    CommonModule,TaskRoutes,SharedModule
+   	...MODULES
   ],
   providers:[TaskResolver],
-  declarations: [...COMPONENTS, TaskToolbarComponent, TaskComponent]
+  declarations: [...COMPONENTS]
 })
 export class TaskModule { }

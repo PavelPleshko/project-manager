@@ -1,3 +1,4 @@
+import {NgModule} from '@angular/core';
 import {RouterModule,Routes} from '@angular/router';
 import {TasksComponent} from './components/tasks/tasks.component';
 import {TaskComponent} from './components/task/task.component';
@@ -8,4 +9,10 @@ const ROUTES:Routes = [
 {path:':taskId',component:TaskComponent,resolve:{task:TaskResolver}}
 ];
 
-export const TaskRoutes = RouterModule.forChild(ROUTES);
+@NgModule({
+imports:[RouterModule.forChild(ROUTES)],
+exports:[RouterModule]
+})
+
+export class TaskRoutingModule{
+}

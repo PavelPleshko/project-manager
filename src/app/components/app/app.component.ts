@@ -1,6 +1,5 @@
 import { Component,OnInit } from '@angular/core';
 
-import {AuthService} from '@app/core';
 
 @Component({
   selector: 'sbg-root',
@@ -9,13 +8,11 @@ import {AuthService} from '@app/core';
 })
 export class AppComponent implements OnInit {
   
-  constructor(private auth:AuthService){
+  constructor(){
 
   }
 
   ngOnInit(){
-  	this.auth.getUserFromApi().subscribe((user)=>{
-  		this.auth.userNext(user);
-  	})
+
   }
 }

@@ -48,3 +48,7 @@ body{
 		color:$success-accent;
 	}
 }
+
+.sbg-control-error{
+	box-shadow:0 0 2px 1px $sbg-danger;
+}

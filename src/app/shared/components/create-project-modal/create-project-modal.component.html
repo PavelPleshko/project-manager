@@ -1,0 +1,30 @@
+<div class="sbg-modal">
+	<div class="sbg-modal--header">
+		Create new project
+	</div>
+	<form class="sbg-modal--body"[formGroup]="createForm">
+		<div class="form-group">
+			<label class="text-muted mb-0"><small>Name</small></label>
+			<input type="text" formControlName="name" class="form-control">
+			<div errorGetter="name">
+				<small *errorType="'required'"  class="text-danger d-block">
+					Name is required
+				</small>
+				<small *errorType="'minlength'" class="text-danger text-nowrap d-block">
+					Name should be at least 5 characters long
+				</small>
+			</div>
+
+		</div>
+		<div class="form-group">
+			<label class="text-muted mb-0"><small>Billing group</small></label>
+			<select formControlName="billing_group" class="custom-select">
+				<option *ngFor="let group of user.billing_groups;let i=index;" [value]="group.id">{{group.name}}</option>
+			</select>
+		</div>
+	</form>
+	<div class="sbg-modal--footer d-flex justify-content-end py-1 px-2">
+		<button class="btn btn-default btn-sm text-uppercase mr-1" (click)="closeModal()">Cancel</button>
+		<button class="btn btn-primary btn-sm text-uppercase" (click)="createProject(projectForm)">Create</button>
+	</div>
+</div>

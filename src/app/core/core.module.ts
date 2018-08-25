@@ -1,18 +1,21 @@
 import { NgModule,Optional,SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {CoreRoutes} from './core.routing';
+import {CoreRoutingModule} from './core-routing.module';
+
 import { CoreComponent } from './components/core/core.component';
 import {SharedModule} from '@app/shared/shared.module';
+
 import {HttpAuthInterceptor} from './interceptors/http-auth-interceptor.service';
 import {HttpErrorInterceptor} from './interceptors/http-error-interceptor.service';
+import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 
 export const COMPONENTS = [
 CoreComponent
 ];
 
 export const ANGULAR_MODULES = [
-CommonModule,CoreRoutes,HttpClientModule,SharedModule
+CommonModule,CoreRoutingModule,HttpClientModule,SharedModule,SnotifyModule
 ];
 
 
@@ -23,11 +26,12 @@ CommonModule,CoreRoutes,HttpClientModule,SharedModule
   ],
   providers:[
 		HttpAuthInterceptor,
-		HttpErrorInterceptor
-		
+		HttpErrorInterceptor,
+		 { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
+   		 SnotifyService
   ],
   declarations: [...COMPONENTS],
-  exports:[SharedModule]
+  exports:[SharedModule,...COMPONENTS],
 })
 export class CoreModule {
 	constructor(@Optional() @SkipSelf() parentModule:CoreModule){

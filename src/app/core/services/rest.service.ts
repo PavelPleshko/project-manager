@@ -1,5 +1,5 @@
 import { Injectable,Inject } from '@angular/core';
-import {HttpClient,HttpParams} from '@angular/common/http';
+import {HttpClient,HttpParams,HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {GLOBAL_CONFIG,GlobalConfig} from '@app/config';
@@ -18,6 +18,13 @@ apiUrl:string;
   	params = this.getQueryString(params);
   	let url = path ? `${this.apiUrl}${path}` : this.apiUrl;
   	return this.http.get(url,{params});
+  }
+
+   postApi(path:string,body:any):Observable<any>{
+    let url = path ? `${this.apiUrl}${path}` : this.apiUrl;
+    let headers = new HttpHeaders();
+    headers = headers.append('content-type','application/json');
+    return this.http.post(url,body,{headers}); 
   }
 
   deleteApi(path:string,params?:any):Observable<any>{

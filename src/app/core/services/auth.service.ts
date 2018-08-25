@@ -1,6 +1,6 @@
 import { Injectable,Inject } from '@angular/core';
-import {BehaviorSubject,Observable} from 'rxjs';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {BehaviorSubject,Observable,forkJoin} from 'rxjs';
+import {distinctUntilChanged,map,take} from 'rxjs/operators';
 
 import {User} from '@app/core/modules/auth/interfaces';
 import {RestService} from './rest.service';
@@ -14,6 +14,13 @@ export class AuthService {
 
   constructor(private restService:RestService){ 
   	this.authorizedUser$ = this.authorizedUser.asObservable().pipe(distinctUntilChanged());
+
+     forkJoin(this.getUserFromApi(),this.getBillingGroups()).pipe(map(([user,billing])=>{
+      user.billing_groups = [...billing.items];
+      return user;
+    }),take(1)).subscribe((user)=>{
+      this.userNext(user);
+    })
   }
 
   userNext(user:User):void{
@@ -21,7 +28,11 @@ export class AuthService {
   }
 
   getUserFromApi():Observable<User>{
-  	return this.restService.getApi('user',{fields:'first_name,last_name'});
+    return this.restService.getApi('user',{fields:'first_name,last_name'});
+  } 
+
+  getBillingGroups():Observable<any>{
+  	return this.restService.getApi('billing/groups',{fields:'_all'});
   }
 
 }
