@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import {TaskService} from '@app/core';
-import {map,take} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {map,take,takeUntil} from 'rxjs/operators';
+import {Observable,Subject} from 'rxjs';
 
 @Component({
   selector: 'sbg-task-table',
   templateUrl: './task-table.component.html',
   styleUrls: ['./task-table.component.scss']
 })
-export class TaskTableComponent implements OnInit {
+export class TaskTableComponent implements OnInit,OnDestroy {
 tasks;
+destroy$:Subject<boolean>=new Subject<boolean>();
 selectedSize:Observable<number>;
 selectAll:boolean = false;
 
   constructor(private taskService:TaskService) { }
 
   ngOnInit() {
-  	this.taskService.tasks.subscribe((tasks)=>{
+  	this.taskService.tasks.pipe(takeUntil(this.destroy$)).subscribe((tasks)=>{
   		this.tasks = tasks;
   	});
   	let selectedTasks = this.taskService.selectedTasks$;
@@ -45,6 +46,11 @@ selectAll:boolean = false;
     this.taskService.deleteSingleTask(taskId).pipe(take(1)).subscribe(()=>{
       this.taskService.requestFetch();
     })
+  }
+
+  ngOnDestroy(){
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
 }

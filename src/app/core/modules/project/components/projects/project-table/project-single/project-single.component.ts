@@ -23,18 +23,16 @@ set selected(value:boolean){
 	}
 }
 _selected:boolean = false;
-  constructor() { }
 
-  ngOnChanges(changes:SimpleChanges) {
+  ngOnChanges(changes:SimpleChanges){
   		if(changes.forceSelect){
-
   		this.selected = this.forceSelect;
   	}
   }
 
-   toggleSelected(){
+toggleSelected():void{
   	this.selected = !this.selected;
   	this.selectChanged.emit({item:this.project,selected:this.selected});
-  }
+}
 
 }

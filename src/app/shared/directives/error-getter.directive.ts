@@ -30,7 +30,6 @@ get form(){
 }
 
  match(error: string){
- 	console.log(this.control,this.control.errors,error)
     if (this.control && this.control.errors){
       if (~Object.keys(this.control.errors).indexOf(error)){
         return true;

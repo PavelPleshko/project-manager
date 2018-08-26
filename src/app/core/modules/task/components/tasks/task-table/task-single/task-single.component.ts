@@ -22,23 +22,21 @@ set selected(value:boolean){
 		this._selected = value;
 	}
 }
-_selected:boolean = false;
+private _selected:boolean = false;
 
-
-  ngOnChanges(changes:SimpleChanges) {
+ngOnChanges(changes:SimpleChanges) {
   	if(changes.forceSelect){
-
   		this.selected = this.forceSelect;
   	}
-  }
+}
 
-  toggleSelected(){
+toggleSelected(){
   	this.selected = !this.selected;
   	this.selectChanged.emit({item:this.task,selected:this.selected});
-  }
+}
 
-  deleteTask(){
+deleteTask(){
   	this.deletedTask.emit(this.task.id);
-  }
+}
 
 }

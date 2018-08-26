@@ -1,6 +1,6 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
-import {pluck,take} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
+import {pluck,take,takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 import {ProjectService} from '@app/core';
 
@@ -10,27 +10,26 @@ import {ProjectService} from '@app/core';
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit,OnDestroy {
- subscriptions:Subscription[]=[];
+  destroy$:Subject<boolean>=new Subject<boolean>();
+
   constructor(private projectService:ProjectService) { }
 
   ngOnInit() {
-  	  let shouldFetch = this.projectService.fetchProjects$.subscribe(()=>{
+  	 this.projectService.fetchProjects$.pipe(takeUntil(this.destroy$)).subscribe(()=>{
       this.getProjects({fields:'_all'});
     })
-    this.subscriptions.push(shouldFetch);
+ 
   }
 
   getProjects(params?:Object){
   	this.projectService.getProjects(params).pipe(pluck('items'),take(1)).subscribe((projectList:any[])=>{
-  		console.log(projectList);
   		this.projectService.pushToCurrentProjects(projectList);
   	})
   }
 
   ngOnDestroy(){
-    this.subscriptions.forEach(sub=>{
-      sub.unsubscribe();
-    })
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
 }
