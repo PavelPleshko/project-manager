@@ -4,4 +4,5 @@ export interface Task{
 	name:string;
 	desription:string;
 	status:string;
+	project:string;
 }

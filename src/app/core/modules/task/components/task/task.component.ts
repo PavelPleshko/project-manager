@@ -11,10 +11,10 @@ import {TaskService} from '@app/core';
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit {
-
+  task:Task;
   constructor(private route:ActivatedRoute,private router:Router,
   	private taskService:TaskService) { }
-task:Task;
+  
   ngOnInit() {
   	  this.route.data.pipe(take(1)).subscribe((data)=>{
       this.task = data.task;
